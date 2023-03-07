@@ -1,5 +1,6 @@
 import time
 import serial
+
 def send_message(ser, command):
     message_bytes = (command + "\n").encode()
     print(f"Sent     --> {message_bytes.decode().strip()}")
@@ -28,8 +29,6 @@ def open_serial_port(name="/dev/ttyS0"):
 
 def main():
     ser = open_serial_port("/dev/tty.usbmodem11301")
-
-    
     while True:
         print("0: Exit")
         print("1: Reset")
@@ -43,9 +42,7 @@ def main():
             send_message(ser, "RESET")
         if choice == "2":
             to_pos = input("Where to: ")
-
             send_message(ser, f"X-AXIS {to_pos}")
-
         if choice == "3":
             bowens_var = input("Press 1 to Extend, 2 to Retract: ")
             if bowens_var == "1":
@@ -57,8 +54,6 @@ def main():
                 print(f"Sent     --> {message_bytes.decode().strip()}")
                 ser.write(message_bytes)
             wait_for_reply(ser)
-
-
 
     print("Goodbye")
 
