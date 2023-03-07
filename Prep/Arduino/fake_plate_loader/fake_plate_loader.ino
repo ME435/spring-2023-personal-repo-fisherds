@@ -5,27 +5,27 @@ void setup() {
   Serial.begin(19200);
   inputString.reserve(200);
   pinMode(LED_BUILTIN, OUTPUT);
+      Serial.println("READY, SAGIAN PE LOADER, ROM VER. 1.1.6, 12APR2001");
 }
 
 void loop() {
   if (stringComplete) {
-
     // Simulated PlateLoader!
     if (inputString.equals("RESET")) {
-      delay(4);  // simulated PlateLoader delay
+      delay(4000);  // simulated PlateLoader delay
       Serial.println("READY, SAGIAN PE LOADER, ROM VER. 1.1.6, 12APR2001");
     } else if (inputString.equals("Z-AXIS EXTEND") || inputString.equals("GRIPPER OPEN")) {
       digitalWrite(LED_BUILTIN, HIGH);
-      delay(1);  // simulated PlateLoader delay
-      Serial.print("LED on --> ");
+      delay(1000);  // simulated PlateLoader delay
+      Serial.print("READY");
       Serial.println(inputString);
     } else if (inputString.equals("Z-AXIS RETRACT") || inputString.equals("GRIPPER CLOSE")) {
       digitalWrite(LED_BUILTIN, LOW);
-      delay(1);  // simulated PlateLoader delay
-      Serial.print("LED off --> ");
+      delay(1000);  // simulated PlateLoader delay
+      Serial.print("READY");
       Serial.println(inputString);
     } else if (inputString.startsWith("MOVE ")) {
-      delay(7);  // simulated PlateLoader delay
+      delay(7000);  // simulated PlateLoader delay
       Serial.print("(long delay) --> ");
       Serial.println(inputString);
     } else {

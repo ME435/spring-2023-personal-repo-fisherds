@@ -1,0 +1,6 @@
+{
+    "port": "/dev/tty.usbmodem11301",
+    "configuration": "cpu=atmega2560",
+    "board": "arduino:avr:mega",
+    "sketch": "Prep/Arduino/fake_plate_loader/fake_plate_loader.ino"
+}
