@@ -22,14 +22,12 @@ void loop() {
       Serial.println("READY, OPEN");
     } else if (inputString.equals("GRIPPER CLOSE")) {
       Serial.println("READY, CLOSED, NOPLATE");
-    } else if (inputString.equals("LOADER STATUS")) {
+    } else if (inputString.equals("LOADER_STATUS")) {
       Serial.println("READY, POSITION 3, Z-AXIS RETRACTED, GRIPPER CLOSED, NOPLATE");
     } else {
       Serial.print("Unknown command --> ");
       Serial.println(inputString);
-
     }
-
     inputString = "";
     isStringComplete = false;
   }
@@ -38,7 +36,6 @@ void loop() {
 void serialEvent() {
   while (Serial.available()) {
     char inChar = (char) Serial.read();
-
     if (inChar == '\n') {
       isStringComplete = true;
     } else {
