@@ -1,49 +1,45 @@
+bool isStringComplete = false;
 String inputString = "";
-bool stringComplete = false;
 
 void setup() {
   Serial.begin(19200);
-  inputString.reserve(200);
   pinMode(LED_BUILTIN, OUTPUT);
-      Serial.println("READY, SAGIAN PE LOADER, ROM VER. 1.1.6, 12APR2001");
+  inputString.reserve(200);
 }
 
 void loop() {
-  if (stringComplete) {
-    // Simulated PlateLoader!
+  if (isStringComplete) {
     if (inputString.equals("RESET")) {
-      delay(4000);  // simulated PlateLoader delay
-      Serial.println("READY, SAGIAN PE LOADER, ROM VER. 1.1.6, 12APR2001");
-    } else if (inputString.equals("Z-AXIS EXTEND") || inputString.equals("GRIPPER OPEN")) {
-      digitalWrite(LED_BUILTIN, HIGH);
-      delay(1000);  // simulated PlateLoader delay
-      Serial.print("READY");
-      Serial.println(inputString);
-    } else if (inputString.equals("Z-AXIS RETRACT") || inputString.equals("GRIPPER CLOSE")) {
-      digitalWrite(LED_BUILTIN, LOW);
-      delay(1000);  // simulated PlateLoader delay
-      Serial.print("READY");
-      Serial.println(inputString);
+      Serial.println("READY,  SAGIAN PE Loader, ROM Ver. 1.1.6, 12APR2001");
     } else if (inputString.startsWith("MOVE ")) {
-      delay(7000);  // simulated PlateLoader delay
-      Serial.print("(long delay) --> ");
-      Serial.println(inputString);
+      delay(3000);  // Simulated 3 seconds for the movement
+      Serial.println("READY");
+    } else if (inputString.startsWith("X-AXIS ")) {
+      Serial.println("READY");
+    } else if (inputString.equals("Z-AXIS EXTEND")) {
+      Serial.println("READY, EXTENDED");
+    } else if (inputString.equals("Z-AXIS RETRACT")) {
+      Serial.println("READY, RETRACTED");
+    } else if (inputString.equals("GRIPPER OPEN")) {
+      Serial.println("READY, OPEN");
+    } else if (inputString.equals("GRIPPER CLOSE")) {
+      Serial.println("READY, CLOSED, NOPLATE");
+    } else if (inputString.equals("LOADER_STATUS")) {
+      Serial.println("READY, POSITION 3, Z-AXIS RETRACTED, GRIPPER CLOSED, NOPLATE");
     } else {
-      Serial.print("From Arduino --> ");
-      delay(0.5);  // simulated PlateLoader delay
+      Serial.print("Unknown command --> ");
       Serial.println(inputString);
     }
-    // clear the string:
     inputString = "";
-    stringComplete = false;
+    isStringComplete = false;
   }
 }
 
 void serialEvent() {
   while (Serial.available()) {
-    char inChar = (char)Serial.read();
+    char inChar = (char) Serial.read();
     if (inChar == '\n') {
-      stringComplete = true;
+      isStringComplete = true;
     } else {
       inputString += inChar;
     }

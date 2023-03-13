@@ -28,32 +28,40 @@ def open_serial_port(name="/dev/ttyS0"):
     return ser
 
 def main():
-    ser = open_serial_port("/dev/tty.usbmodem11301")
+    ser = open_serial_port("/dev/tty.usbmodem1101")
     while True:
-        print("0: Exit")
         print("1: Reset")
-        print("2: X-aix")
-        print("3: Z-axis")
+        print("2: X-Axis")
+        print("3: Z-Axis")
         print("4: Gripper")
+        print("5: Move")
+        print("6: Loader Status")
         choice = input("Make a selection: ")
-        if choice == "0":
+        if choice == "" or choice == "0":
             break
         if choice == "1":
             send_message(ser, "RESET")
         if choice == "2":
-            to_pos = input("Where to: ")
-            send_message(ser, f"X-AXIS {to_pos}")
+            arg = input("Where to: ")
+            send_message(ser, f"X-AXIS {arg}")
         if choice == "3":
-            bowens_var = input("Press 1 to Extend, 2 to Retract: ")
-            if bowens_var == "1":
-                message_bytes = b'Z-AXIS EXTEND\n'
-                print(f"Sent     --> {message_bytes.decode().strip()}")
-                ser.write(message_bytes)
-            if bowens_var == "2":
-                message_bytes = b'Z-AXIS RETRACT\n'
-                print(f"Sent     --> {message_bytes.decode().strip()}")
-                ser.write(message_bytes)
-            wait_for_reply(ser)
+            arg = input("Press e to Extend, r to Retract: ")
+            if arg == "e":
+                send_message(ser, "Z-AXIS EXTEND")
+            if arg == "r":
+                send_message(ser, "Z-AXIS RETRACT")
+        if choice == "4":
+            arg = input("Press o to Open, c to Close: ")
+            if arg == "o":
+                send_message(ser, "GRIPPER OPEN")
+            if arg == "c":
+                send_message(ser, "GRIPPER CLOSE")
+        if choice == "5":
+            arg1 = input("Plate start: ")
+            arg2 = input("Plate finish: ")
+            send_message(ser, f"MOVE {arg1} {arg2}")
+        if choice == "6":
+            send_message(ser, "LOADER_STATUS")
 
     print("Goodbye")
 
