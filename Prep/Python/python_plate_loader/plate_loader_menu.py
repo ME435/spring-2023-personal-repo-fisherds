@@ -5,7 +5,7 @@ def send_message(ser, command):
     message_bytes = (command + "\n").encode()
     print(f"Sent     --> {message_bytes.decode().strip()}")
     ser.write(message_bytes)
-    wait_for_reply(ser)
+    return wait_for_reply(ser)
 
 def print_replies(ser):
     time.sleep(0.1)
@@ -13,12 +13,12 @@ def print_replies(ser):
         received = ser.readline()
         print("Received --> " + received.decode().strip())
         time.sleep(0.1)
+    return received
 
 def wait_for_reply(ser):
     while ser.in_waiting == 0:
         time.sleep(0.1) # Done to avoid the ser.readline timeout
-    received = ser.readline()
-    print("Received --> " + received.decode().strip())
+    return print_replies(ser)
 
 def open_serial_port(name="/dev/ttyS0"):
     ser = serial.Serial(name, baudrate = 19200)

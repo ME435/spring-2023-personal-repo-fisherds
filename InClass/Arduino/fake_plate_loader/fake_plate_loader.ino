@@ -14,6 +14,8 @@ void loop() {
     } else if (inputString.startsWith("MOVE ")) {
       delay(3000);  // Simulated 3 seconds for the movement
       Serial.println("READY");
+    } else if (inputString.startsWith("X-AXIS ")) {
+      Serial.println("READY");
     } else if (inputString.equals("Z-AXIS EXTEND")) {
       Serial.println("READY, EXTENDED");
     } else if (inputString.equals("Z-AXIS RETRACT")) {
