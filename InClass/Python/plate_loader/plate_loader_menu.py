@@ -55,7 +55,7 @@ def wait_for_response(ser):
     return response
 
 
-def open_serial(comPort="/dev/tty.usbmodem101"):
+def open_serial(comPort="/dev/tty.usbmodem2101"):
     ser = serial.Serial(comPort, baudrate=19200)    
     while ser.is_open == False:
         time.sleep(0.1)
