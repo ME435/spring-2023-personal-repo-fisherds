@@ -1,5 +1,8 @@
+import serial
+import time
+
 def main():
-    ser = "Fake Serial port object"
+    ser = open_serial()
 
     while True:
         print("1: RESET")
@@ -35,7 +38,32 @@ def main():
         if selection == "6":
             send_command(ser, "LOADER_STATUS")
 
+
 def send_command(ser, command):
-    print("TODO: send the command: ", command)
+    print("Sending: ", command)
+    command = command + "\n"
+    ser.write(command.encode())
+    return wait_for_response(ser)
+
+
+def wait_for_response(ser):
+    while ser.in_waiting == 0:
+        time.sleep(0.1)
+    while ser.in_waiting > 0:
+        response = ser.readline()
+    print(f"Received --> {response}")
+    return response
+
+
+def open_serial(comPort="/dev/tty.usbmodem101"):
+    ser = serial.Serial(comPort, baudrate=19200)    
+    while ser.is_open == False:
+        time.sleep(0.1)
+    
+    # time.sleep(2)
+
+    ser.flush()
+    print("Connected")
+    return ser
 
 main()

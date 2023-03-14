@@ -2,6 +2,7 @@ import time
 import serial
 
 from flask import Flask
+from flask import render_template
 
 def send_message(ser, command):
     message_bytes = (command + "\n").encode()
@@ -30,11 +31,13 @@ def open_serial_port(name="/dev/ttyS0"):
 
 
 app = Flask(__name__)
-ser = open_serial_port("/dev/tty.usbmodem1101")
+# ser = open_serial_port("/dev/tty.usbmodem1101")
+ser = open_serial_port("/dev/tty.usbserial-210")
 
 @app.route('/')
 def hello():
-    return 'Hello World!'
+    # return 'Hello World!'
+    return render_template("index.html")
 
 @app.route('/hello/<name>')
 def hello_name(name):
@@ -42,5 +45,7 @@ def hello_name(name):
 
 @app.route('/api/<command>')
 def api_command(command):
+    # print(f"Got the request {command}")
+    # return f"Got {command}"
     return send_message(ser, command)
 
