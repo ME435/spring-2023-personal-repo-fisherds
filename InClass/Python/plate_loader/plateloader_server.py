@@ -21,7 +21,7 @@ def wait_for_response(ser):
     return response
 
 
-def open_serial(comPort="/dev/tty.usbmodem2101"):
+def open_serial(comPort="/dev/tty.usbmodem1101"):
     ser = serial.Serial(comPort, baudrate=19200)    
     while ser.is_open == False:
         time.sleep(0.1)
@@ -40,13 +40,15 @@ def hello_world():
 def hello_name(name):
     return f"<p>Hello, {name}!</p>"
 
-ser = open_serial()
+@app.before_first_request
+def initialize():
+    print("Called only once, when the first request comes in")
+    app.ser = open_serial()
+
 
 @app.route("/api/<command>")
 def plateloader_commands(command):
-    reply = send_command(ser, command)
-
-    # return f"<p>TODO: Send the serial port the command, {command}!</p>"
+    reply = send_command(app.ser, command)
     return reply.decode().strip()
 
 
