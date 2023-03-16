@@ -39,7 +39,7 @@ app = Flask(__name__)
 def initialize():
     print("Called only once, when the first request comes in")
     
-    app.ser = open_serial("/dev/tty.usbmodem1101")
+    app.ser = open_serial("/dev/tty.usbmodem101")
     
 
 

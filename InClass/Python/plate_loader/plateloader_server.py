@@ -1,4 +1,6 @@
 from flask import Flask
+from flask import render_template
+
 import serial
 import time
 
@@ -34,7 +36,8 @@ def open_serial(comPort="/dev/tty.usbmodem1101"):
 
 @app.route("/")
 def hello_world():
-    return "<p>Hello, Class!</p>"
+    # return "<p>Hello, Class!</p>"
+    return render_template("index.html")
 
 @app.route("/name/<name>")
 def hello_name(name):
