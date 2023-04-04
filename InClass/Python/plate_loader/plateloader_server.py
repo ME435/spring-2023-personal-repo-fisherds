@@ -46,7 +46,8 @@ def hello_name(name):
 @app.before_first_request
 def initialize():
     print("Called only once, when the first request comes in")
-    app.ser = open_serial()
+    # app.ser = open_serial()
+    app.ser = open_serial("/dev/ttyACM0")
 
 
 @app.route("/api/<command>")

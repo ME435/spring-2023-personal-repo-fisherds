@@ -20,7 +20,7 @@ def wait_for_reply(ser):
         time.sleep(0.1) # Done to avoid the ser.readline timeout
     return print_replies(ser)
 
-def open_serial_port(name="/dev/ttyS0"):
+def open_serial_port(name="/dev/ttyACM0"):
     ser = serial.Serial(name, baudrate = 19200)
     print("Connected")
     time.sleep(2.0)
@@ -28,7 +28,8 @@ def open_serial_port(name="/dev/ttyS0"):
     return ser
 
 def main():
-    ser = open_serial_port("/dev/tty.usbmodem1101")
+    # ser = open_serial_port("/dev/tty.usbmodem1101")
+    ser = open_serial_port("/dev/ttyACM0")
     while True:
         print("1: Reset")
         print("2: X-Axis")
