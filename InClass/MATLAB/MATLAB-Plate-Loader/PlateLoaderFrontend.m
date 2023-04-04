@@ -31,7 +31,8 @@ classdef PlateLoaderFrontend < hgsetget
             fprintf("Sending to the server the command %s", command);
 
             r = RequestMessage;
-            uri = URI("http://localhost:5004/api/" + command);
+            % uri = URI("http://localhost:5004/api/" + command);
+            uri = URI("http://fisherds-pi400-inclass.rose-hulman.edu:5000/api/" + command);
             resp = send(r,uri);
             status = resp.StatusCode;
             response = resp.Body.Data;
