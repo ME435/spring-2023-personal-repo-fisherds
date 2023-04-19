@@ -38,5 +38,21 @@ def traffic_light():
     #   Yellow LED on only for 1 seconds
     #   Red LED on only for 3 seconds
 
+    while True:
+        green_led.on()
+        yellow_led.off()
+        red_led.off()
+        time.sleep(4.0)
+
+        green_led.off()
+        yellow_led.on()
+        red_led.off()
+        time.sleep(1.0)
+
+        green_led.off()
+        yellow_led.off()
+        red_led.on()
+        time.sleep(3.0)
+
 
 main()
