@@ -20,37 +20,22 @@ def main():
 
     left_motor_forwards_pin.on()
     left_motor_backwards_pin.off()
-
-    right_motor_backwards_pin.off()
-    right_motor_forwards_pin.on()
     left_motor_pwm_enable.value = 0.6
-    right_motor_pwm_enable.value = 0.6
-    
-    # left_line.when_line = lambda: left_motor_forwards_pin.off()
-    # left_line.when_no_line = lambda: left_motor_forwards_pin.on()
-    # right_line.when_line = lambda: right_motor_forwards_pin.off()
-    # right_line.when_no_line = lambda: right_motor_forwards_pin.on()
 
-    # signal.pause()
+    right_motor_forwards_pin.on()
+    right_motor_backwards_pin.off()
+    right_motor_pwm_enable.value = 0.8
 
     while True:
         if left_line.value == 0:
-            left_motor_pwm_enable.value = 0.6
             left_motor_forwards_pin.on()
-            left_motor_backwards_pin.off()
         else:
             left_motor_forwards_pin.off()
-            # left_motor_pwm_enable.value = 0.6
-            # left_motor_backwards_pin.on()
 
         if right_line.value == 0:
-            right_motor_pwm_enable.value = 0.8
             right_motor_forwards_pin.on()
-            right_motor_backwards_pin.off()
         else:
             right_motor_forwards_pin.off()
-            # right_motor_pwm_enable.value = 0.6
-            # right_motor_backwards_pin.on()
 
 
 main()
