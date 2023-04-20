@@ -6,8 +6,8 @@ def main():
     print("Fancy LEDs")
     # fancy_blink()
     # led_pwm()
-    # led_board()
-    traffic_light_api()
+    led_board()
+    # traffic_light_api()
 
 
 def fancy_blink():
