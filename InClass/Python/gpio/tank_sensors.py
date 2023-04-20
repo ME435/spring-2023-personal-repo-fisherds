@@ -6,9 +6,13 @@ import signal
 def main():
     print("Tank Sensors")
     # line_sensor_events()
-    line_sensor_states()
+    # line_sensor_states()
+    ultrasonic_distance_sensor()
 
+def ultrasonic_distance_sensor():
+    print("Ultrasonic Distance Sensor")
 
+    
 def line_sensor_states():
     print("Line Sensor States")
     starboard_line_sensor = gz.LineSensor(20)
