@@ -9,10 +9,15 @@ def main():
     # line_sensor_states()
     ultrasonic_distance_sensor()
 
+
 def ultrasonic_distance_sensor():
     print("Ultrasonic Distance Sensor")
+    sensor = gz.DistanceSensor(echo=8, trigger=11)
+    while True:
+        print('Distance: ', sensor.distance * 100)
+        time.sleep(1)
 
-    
+
 def line_sensor_states():
     print("Line Sensor States")
     starboard_line_sensor = gz.LineSensor(20)
