@@ -3,7 +3,7 @@ clc
 fprintf("Connecting...\n");
 mqClient = mqttclient('tcp://broker.hivemq.com');
 
-subscribe(mqClient,"my_messages", "Callback", @myCallback);
+subscribe(mqClient,"my_messages", "Callback", {@myCallback, app});
 
 for k = 1:3
     pause(1);
