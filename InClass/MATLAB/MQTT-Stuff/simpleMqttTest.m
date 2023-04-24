@@ -17,9 +17,9 @@ end
 
 function myCallback(topic, message)
 
-messageCell = jsondecode(message);
+messageCell = jsondecode(message)
 messageType = messageCell.type;
 messagePayload = messageCell.payload;
 
-fprintf(messagePayload)
+% fprintf(messagePayload)
 end
