@@ -3,6 +3,9 @@ clc
 clear all
 % mqClient = mqtt("tcp://broker.hivemq.com")
 mqClient = mqttclient("tcp://broker.hivemq.com");
+
+mqClient.Connected
+
 subscribe(mqClient, "my_messages", "Callback", @myCallback)
 for k = 1:5
     % publish()
