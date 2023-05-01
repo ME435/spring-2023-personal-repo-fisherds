@@ -1,5 +1,5 @@
 import adafruit_servokit
-import numpy.interp
+import numpy
 
 def main():
     print("Servo Menu")
