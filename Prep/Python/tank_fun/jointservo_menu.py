@@ -12,7 +12,7 @@ def main():
     print('Testing the  SERVOS  of a robot')
     print('--------------------------------------------------')
 
-    PIN_CAMERA_SERVO = 11
+    # PIN_CAMERA_SERVO = 11
     PIN_JOINT_1 = 12
     PIN_JOINT_2 = 13
     PIN_JOINT_3 = 14
@@ -27,13 +27,12 @@ def main():
         print("2 --> Arm Joint 2")
         print("3 --> Arm Joint 3")
         print("G --> Gripper")
-        print("C --> Camera Tilt")
         selection = input("Selection: ")
         if selection == "":
             break
         elif selection == "1":
             angle = int(input("Joint 1 angle: "))
-            angle = interp(angle, [90, -90], [0, 180])  # flip
+            angle = interp(angle, [-90, 90], [180, 0])  # flip
             servo_kit.servo[PIN_JOINT_1].angle = angle
         elif selection == "2":
             angle = int(input("Joint 2 angle: "))
@@ -43,15 +42,11 @@ def main():
             angle = int(input("Joint 3 angle: "))
             angle = interp(angle, [-90, 90], [0, 180])  # add 90
             servo_kit.servo[PIN_JOINT_3].angle = angle
-        elif selection == "G":
+        elif selection == "G" or selection == "g":
             inches = float(input("Gripper distance (inches 0.0 to 2.0): "))
             angle = interp(inches, [0, 2], [100, 20])
             print("Request:", inches, " Result: ", angle)
             servo_kit.servo[PIN_GRIPPER_SERVO].angle = angle
-        elif selection == "C":
-            angle = int(input("Camera title angle (0 to 60): "))
-            angle = interp(angle,[0, 45], [30, 0]) # maps 0->45 to 30->0 (flip and scale)
-            servo_kit.servo[PIN_CAMERA_SERVO].angle = angle
         else:
             print("Invalid servo number")
 
