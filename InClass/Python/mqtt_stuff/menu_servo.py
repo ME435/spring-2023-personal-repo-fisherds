@@ -23,6 +23,7 @@ def main():
         
         if selection == "":
             break
+        
         elif selection == "1":
             angle = int(input("Joint 1 angle: "))
             angle = numpy.interp(angle, [-90, 90], [180, 0])
@@ -30,20 +31,16 @@ def main():
             
         elif selection == "2":
             angle = int(input("Joint 2 angle: "))
-            # This angle should be 0 to 180, BE CAREFUL!!!!!!
             angle = numpy.interp(angle, [-90, 45], [0, 135])  
             servo_kit.servo[CHANNEL_JOINT_2].angle = angle
-            
+
         elif selection == "3":
             angle = int(input("Joint 3 angle: "))
-            # This angle should be 0 to 180, we'll start here!
             angle = numpy.interp(angle, [-90, 90], [0, 180])  
             servo_kit.servo[CHANNEL_JOINT_3].angle = angle
             
         elif selection == "G" or selection == "g":
             inches = float(input("Gripper distance: "))
-            # tranlate inches into servo angle
-            # This angle should be 0 to 180!
             angle = numpy.interp(inches, [0, 2], [100, 10])  
             servo_kit.servo[CHANNEL_GRIPPER].angle = angle
         
