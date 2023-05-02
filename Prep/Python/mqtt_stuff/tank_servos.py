@@ -24,7 +24,7 @@ class App:
         print("MQTT payload", payload)
 
         if message_type == "joints":
-            joint1_angle = numpy.interp(payload[0], [90, -90], [0, 180])  # flip
+            joint1_angle = numpy.interp(payload[0], [-90, 90], [180, 0])  # flip
             joint2_angle = numpy.interp(payload[1], [-90, 90], [0, 180])  # add 90
             joint3_angle = numpy.interp(payload[2], [-90, 90], [0, 180])  # add 90
             self.servo_kit.servo[CHANNEL_JOINT_1].angle = joint1_angle
@@ -33,7 +33,7 @@ class App:
 
         if message_type == "gripper":
             servo_angle = numpy.interp(payload, [0, 2], [105, 0])
-            self.kit.servo[CHANNEL_GRIPPER].angle = servo_angle
+            self.servo_kit.servo[CHANNEL_GRIPPER].angle = servo_angle
 
 
 def main():
