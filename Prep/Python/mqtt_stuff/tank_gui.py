@@ -21,21 +21,21 @@ class App:
         print(f"Type: {message_type}   Payload: {message_payload}")
 
 
-        if message_type == "red":
-            if message_payload == "on":
-                self.red_led.on()
-            if message_payload == "off":
-                self.red_led.off()
-        if message_type == "yellow":
-            if message_payload == "on":
-                self.yellow_led.on()
-            if message_payload == "off":
-                self.yellow_led.off()
-        if message_type == "green":
-            if message_payload == "on":
-                self.green_led.on()
-            if message_payload == "off":
-                self.green_led.off()
+        if message_type == "joints":
+            print(f"Moving the joints to {message_payload}")
+            self.robot.arm_servos.move_joints(message_payload)
+            
+        if message_type == "gripper":
+            print(f"Moving the gripper to {message_payload}")
+            self.robot.arm_servos.move_gripper(message_payload)
+            
+        if message_type == "arm_off":
+            print(f"Turn all the arm servos off.")
+            self.robot.arm_servos.disable()
+            
+        if message_type == "drive":
+            print(f"Drive the tank treads at {message_payload}.")
+            # TODO: use the rosebot class
                 
 def main():
     print("Ready")

@@ -43,33 +43,8 @@ class DriveSystem:
     Motor_A_Pin2 = 15
     Motor_B_Pin1 = 27
     Motor_B_Pin2 = 18
-    self.left_motor = Motor(Motor_B_Pin1, Motor_B_Pin2, Motor_B_EN)
-    self.right_motor = Motor(Motor_A_Pin2, Motor_A_Pin1, Motor_A_EN)
-
-  def go(self, left_wheel_speed, right_wheel_speed):
-    """ Sets the left and right motor speed -100 to 100 """
-    self.left_motor.turn_on(left_wheel_speed)
-    self.right_motor.turn_on(right_wheel_speed)
-  
-  def stop(self):
-    self.left_motor.turn_off()
-    self.right_motor.turn_off()
-
-  def go_straight_for_seconds(self, seconds, speed=50):
-    self.go(speed, speed)
-    time.sleep(seconds)
-    self.stop()
-
-  def go_straight_for_inches(self, inches, speed=50):
-    self.go(speed, speed)
-    if speed < 0:
-      speed = -speed
-    if inches < 0:
-      inches = -inches
-    speed_inches_per_second = 0.2 * speed + 2.5
-    seconds = inches / speed_inches_per_second
-    time.sleep(seconds)
-    self.stop()
+    self.left_motor = gz.Motor(forward=Motor_B_Pin1, backward=Motor_B_Pin2, enable=Motor_B_EN)
+    self.right_motor =gz.Motor(forward=Motor_A_Pin2, backward=Motor_A_Pin1, enable=Motor_A_EN)
 
 
 class ArmServos:
