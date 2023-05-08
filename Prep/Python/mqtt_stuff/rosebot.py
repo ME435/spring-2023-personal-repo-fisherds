@@ -10,7 +10,6 @@ class RoseBot:
     self.ultrasonic = UltrasonicSensor()
     self.line_sensors = LineSensors()
 
-
 class Motor:
   def __init__(self, pin_1, pin_2, pin_enable):
     self.digital_output_1 = gz.DigitalOutputDevice(pin_1)
@@ -93,6 +92,12 @@ class ArmServos:
     servo_angle = interp(inches, [0, 2], [105, 0])
     print("Request:", inches, " Result: ", servo_angle)
     self.kit.servo[ArmServos.PIN_GRIPPER_SERVO].angle = servo_angle
+
+  def disable(self):
+    self.kit.servo[ArmServos.PIN_JOINT_1].angle = None
+    self.kit.servo[ArmServos.PIN_JOINT_2].angle = None
+    self.kit.servo[ArmServos.PIN_JOINT_3].angle = None
+    self.kit.servo[ArmServos.PIN_GRIPPER_SERVO].angle = None
 
 
 class UltrasonicSensor:
