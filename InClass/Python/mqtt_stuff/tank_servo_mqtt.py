@@ -38,6 +38,13 @@ class App:
             angle = numpy.interp(message_payload, [0, 2], [100, 10])  
             self.servo_kit.servo[CHANNEL_GRIPPER].angle = angle
 
+        if message_type == "arm_off":
+            # print(f"Turn all the arm servos off.")
+            self.servo_kit.servo[CHANNEL_JOINT_1].angle = None
+            self.servo_kit.servo[CHANNEL_JOINT_2].angle = None
+            self.servo_kit.servo[CHANNEL_JOINT_3].angle = None
+            self.servo_kit.servo[CHANNEL_GRIPPER].angle = None
+
 
 def main():
     print("Ready")
