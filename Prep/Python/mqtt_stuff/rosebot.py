@@ -7,6 +7,8 @@ import time
 class RoseBot:
   def __init__(self):
     self.mode = ""
+    self.is_streaming_line_sensors = False
+
     self.drive_system = DriveSystem()
     self.arm_servos = ArmServos()
     self.ultrasonic = UltrasonicSensor()
@@ -16,11 +18,13 @@ class RoseBot:
     self.mode = mode
     if self.mode == "go_until_wall" or "go_until_line":
       self.drive_system.go_forward()    
-    if self.mode == "":
+    if self.mode == "" or self.mode == "stop":
+      print("Stopping")
       self.drive_system.stop()
      
   def update_mode(self):
     if self.mode == "go_until_wall":
+      print(self.ultrasonic.get_distance())
       if self.ultrasonic.get_distance() < 20.0:
         self.drive_system.stop()
         self.mode = ""
@@ -32,7 +36,8 @@ class RoseBot:
           self.mode = ""
     
     if self.mode == "line_follow":
-      self.do_line_follow()    
+      self.do_line_follow()
+    
     
   def do_line_follow(self):
     line_sensor_readings = self.line_sensors.get_values()
@@ -83,15 +88,15 @@ class DriveSystem:
      self.right_motor.forward(pwm)
   
   def go_backward(self, pwm=0.6):
-     self.left_motor.reverse(pwm)
-     self.right_motor.reverse(pwm)
+     self.left_motor.backward(pwm)
+     self.right_motor.backward(pwm)
   
   def turn_right(self, leftMotorSpeed, rightMotorSpeed):
      self.left_motor.forward(leftMotorSpeed)
-     self.right_motor.reverse(rightMotorSpeed)
+     self.right_motor.backward(rightMotorSpeed)
 
   def turn_left(self, leftMotorSpeed, rightMotorSpeed):
-     self.left_motor.reverse(leftMotorSpeed)
+     self.left_motor.backward(leftMotorSpeed)
      self.right_motor.forward(rightMotorSpeed)
   
   def drive_motor(self, motor: gz.Motor, direction, pwm):
@@ -100,7 +105,7 @@ class DriveSystem:
     elif direction == 1:
        motor.forward(pwm)
     elif direction == -1:
-       motor.reverse(pwm)
+       motor.backward(pwm)
         
 
 class ArmServos:
@@ -147,8 +152,8 @@ class UltrasonicSensor:
 
 
 class LineSensors:
-    BLACK = 0
-    WHITE = 1
+    BLACK = 1
+    WHITE = 0
 
     def __init__(self):
         self.left_line = gz.LineSensor(20)

@@ -1,6 +1,7 @@
 import mqtt_helper as mh
 import rosebot
 import time
+import datetime
 
 
 class App:
@@ -10,7 +11,7 @@ class App:
 
         self.mqtt_client = mh.MqttClient()
         self.mqtt_client.callback = self.my_callback
-        self.mqtt_client.connect("fisherds/to_pi", "fisherds/to_computer", use_off_campus_broker=True)
+        self.mqtt_client.connect("me435/fisherds/to_pi", "me435/fisherds/to_computer", use_off_campus_broker=True)
 
     def my_callback(self, message_type, message_payload):
         print(f"Type: {message_type}   Payload: {message_payload}")
@@ -32,12 +33,15 @@ class App:
             self.robot.drive_system.drive(message_payload)
         
         if message_type == "line_sensor_stream":
-            if message_payload == "on":
+            if message_payload.upper() == "On".upper():
                 self.robot.is_streaming_line_sensors = True
-            if message_payload == "off":
+            elif message_payload.upper() == "Off".upper():
                 self.robot.is_streaming_line_sensors = False
+            else:
+                print("Unexpected line_sensor_stream payload")
 
         if message_type == "mode":
+            print(f"Set mode to {message_payload}.")
             self.robot.set_mode(message_payload)
 
 
@@ -49,7 +53,12 @@ def main():
     while True:
         if app.robot.is_streaming_line_sensors and time.time() - last_sensor_send_time > 2:
             last_sensor_send_time = time.time()
-            app.mqtt_client.send_message("line_sensors", app.robot.line_sensors.get_values())
+            payload = {}
+            payload["values"] = app.robot.line_sensors.get_values()
+            now = datetime.datetime.now()
+            payload["timestamp"] = now.strftime("%d/%m/%Y %H:%M:%S")
+            print("payload =", payload)
+            app.mqtt_client.send_message("line_sensors", payload)
         app.robot.update_mode()
         time.sleep(0.1)
   
