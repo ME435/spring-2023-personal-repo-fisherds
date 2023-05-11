@@ -10,9 +10,12 @@ class App:
 
         self.mqtt_client = mh.MqttClient()
         self.mqtt_client.callback = self.my_callback
+        # self.mqtt_client.connect(subscription_topic_name="me435/fisherds/to_pi",
+        #                          publish_topic_name="me435/fisherds/to_computer",
+        #                          use_off_campus_broker=True)
+        
         self.mqtt_client.connect(subscription_topic_name="me435/fisherds/to_pi",
-                                 publish_topic_name="me435/fisherds/to_computer",
-                                 use_off_campus_broker=True)
+                            publish_topic_name="me435/fisherds/to_computer")
 
 
     def my_callback(self, message_type, message_payload):
@@ -58,7 +61,7 @@ def main():
             date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
             # print("date and time:", date_time)
             print(f"values: ", app.robot.line_sensors.get_values())
-            app.mqtt_client.send_message("line_sensors", {"value": app.robot.line_sensors.get_values(),
+            app.mqtt_client.send_message("line_sensors", {"values": app.robot.line_sensors.get_values(),
                                                           "timestamp": date_time})
 
         time.sleep(0.1)
