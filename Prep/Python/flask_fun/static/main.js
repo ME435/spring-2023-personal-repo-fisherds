@@ -1,8 +1,9 @@
 async function sendCommand(command) {
+    console.log("Client side", command);
+    
     var response = await fetch(`/api/${command}`);
     var replyText = await response.text();
     console.log(replyText);
-
     document.querySelector("#replyText").innerHTML = replyText;
 }
 
